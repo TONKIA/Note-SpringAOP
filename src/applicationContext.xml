@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.tonkia.springaop.service.MyServiceImpl.*(..))"
+			id="mypc" />
+		<aop:aspect ref="myAspect">
+			<aop:before pointcut-ref="mypc" method="before" />
+			<aop:before pointcut-ref="mypc" method="beforeArg" />
+			<aop:after-returning pointcut-ref="mypc" method="after" />
+		</aop:aspect>
+	</aop:config>
+
+	<bean id="myService" class="com.tonkia.springaop.service.MyServiceImpl"></bean>
+	<bean id="myAspect" class="com.tonkia.springaop.commons.MyAspectSupport"></bean>
+
+</beans>
